@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from 'react';
 import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Mesh } from 'three';
 
 interface PlanetProps {
     modelSrc: string;
-    position: [number, number, number];
+    position: number[];
     scale: number;
     onClick?: () => void; // 클릭 이벤트 핸들러
 }
