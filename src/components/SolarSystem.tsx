@@ -7,6 +7,9 @@ import Planet from './Planet';
 import PlanetModal from './PlanetModal';
 import '../App.css';
 import { planetsData } from '../data/planetsData';
+import Button from '@mui/material/Button';
+import Sidebar from './SideBar';
+import CameraControls from './CameraControls';
 
 const SolarSystem: React.FC = () => {
     const cameraRef = useRef<THREE.PerspectiveCamera>(null);
@@ -17,6 +20,17 @@ const SolarSystem: React.FC = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPlanet, setSelectedPlanet] = useState(null);
+
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+    const [isPlaying, setIsPlaying] = useState(true);
+
+    const [position, setPosition] = useState({ x: 25, y: 4, z: -8})
+    const [target, setTarget] = useState({x: 0, y: 0, z: 0})
+
+    const handleOnclick = () => {
+        setPosition({x: 30, y: -20, z: 0})
+        setTarget({x: 3, y: 2, z: 0 })
+    }
 
     const handleScroll = () => {
         const newSection = Math.round(window.scrollY / window.innerHeight);
@@ -31,36 +45,128 @@ const SolarSystem: React.FC = () => {
         }
     };
 
+    const toggleAudio = () => {
+        if (audioRef.current) {
+            if (isPlaying) {
+                audioRef.current.pause();
+            } else {
+                audioRef.current.play();
+            }
+            setIsPlaying(!isPlaying);
+        }
+    }
+
+    useEffect(() => {
+        const audio = new Audio('public/sound/superspacy-atmosphere.mp3');
+        audio.loop = true;
+        audio.play();
+        audioRef.current = audio;
+
+        return () => {
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current = null;
+            }
+        };
+    }, []);
+
     const handlePlanetClick = (index: number) => {
         setSelectedPlanet(planetsData[index]);
         setIsModalOpen(true);
-        // if (cameraRef.current) {
-        //     const planetPosition = new THREE.Vector3(...planetsData[index].position);
-        //     const offset = 30; // 행성으로부터 카메라의 거리
-        //     const direction = new THREE.Vector3().subVectors(cameraRef.current.position, planetPosition).normalize();
-        //     const targetPosition = planetPosition.clone().add(direction.multiplyScalar(offset));
 
-        //     gsap.to(cameraRef.current.position, {
-        //         duration: 1.5,
-        //         x: targetPosition.x,
-        //         y: targetPosition.y,
-        //         z: targetPosition.z,
-        //         onUpdate: () => {
-        //             if (cameraRef.current) {
-        //                 cameraRef.current.lookAt(planetPosition);
-        //                 setCameraPosition({
-        //                     x: cameraRef.current.position.x,
-        //                     y: cameraRef.current.position.y,
-        //                     z: cameraRef.current.position.z,
-        //                 });
-        //             }
-        //         }
-        //     });
-        // }
+        const planetPosition = planetsData[index].position;
+
+        let xOffset = 10; 
+        let yOffset = 10;
+        switch (index) {
+            case 0: 
+                xOffset = 150; 
+                yOffset = 70;
+                break;
+            case 1: 
+                xOffset = 1;
+                break;
+            case 2: 
+                xOffset = 1;
+                break;
+            case 3: 
+                xOffset = 1;
+                break;
+            case 4: 
+                xOffset = 1;
+                break;
+            case 5: 
+                xOffset = 1;
+                break;
+            case 6: 
+                xOffset = 32;
+                break;
+            case 7: 
+                xOffset = 35;
+                break;
+            case 8: 
+                xOffset = 20;
+                break;
+            case 9: 
+                xOffset = 15;
+                break;
+        }
+
+        setPosition({
+            x: planetPosition[0] + xOffset,  // or any desired offset
+            y: planetPosition[1] + yOffset,
+            z: planetPosition[2] + 10,
+        });
+        setTarget({
+            x: planetPosition[0],
+            y: planetPosition[1],
+            z: planetPosition[2],
+        });
+    };
+
+    const handleMenuItemClick = (index: number) => {
+        if (cameraRef.current) {
+            const planetPosition = new THREE.Vector3(...planetsData[index].position);
+            gsap.to(cameraRef.current.position, {
+                duration: 1.5,
+                x: planetPosition.x + 180, 
+                y: planetPosition.y + 100, // 상하
+                z: planetPosition.z + 50,
+                onUpdate: () => {
+                    if (cameraRef.current) {
+                        cameraRef.current.lookAt(planetPosition);
+                        setCameraPosition({
+                            x: cameraRef.current.position.x,
+                            y: cameraRef.current.position.y,
+                            z: cameraRef.current.position.z,
+                        });
+                    }
+                }
+            });
+        }
     };
 
     return (
         <>
+            <section style={{ background: 'black' }}>
+                <Sidebar 
+                    items={
+                        [
+                            'Sun', 
+                            'Mercury', 
+                            'Venus', 
+                            'Earth', 
+                            'Moon', 
+                            'Mars',
+                            'Jupiter',
+                            'Saturn',
+                            'Uranos',
+                            'Neptune',
+                        ]
+                    } 
+                    onMenuItemClick={handleMenuItemClick} 
+                />
+            </section>
             <Canvas
                 style={{ width: '100%', height: '100vh' }}
                 camera={{ position: [200, 150, 540], fov: 55, }}
@@ -73,7 +179,8 @@ const SolarSystem: React.FC = () => {
             >
                 <ambientLight intensity={0.5} />
                 <spotLight position={[0, 150, 100]} angle={0.3} penumbra={1} castShadow />
-                <OrbitControls />
+                {/* <OrbitControls /> */}
+                <CameraControls position={position} target={target}/>
                 <Stars radius={200} depth={60} count={2000} factor={7} saturation={0} fade speed={0.5}/>
                 {planetsData.map((planet, index) => (
                     <Planet
@@ -90,6 +197,23 @@ const SolarSystem: React.FC = () => {
             {isModalOpen && selectedPlanet && (
                 <PlanetModal planet={selectedPlanet} onClose={() => setIsModalOpen(false)} />
             )}
+
+            <Button
+                onClick={toggleAudio}
+                sx={{
+                    position: 'fixed',
+                    top: '10px',
+                    right: '10px',
+                    padding: '10px',
+                    background: 'none',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                }}
+                variant='outlined'
+            >
+                {isPlaying ? 'Sound Pause' : 'Sound Play'}
+            </Button>
         </>
     );
 };
