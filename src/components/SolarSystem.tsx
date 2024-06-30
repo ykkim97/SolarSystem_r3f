@@ -81,8 +81,6 @@ const SolarSystem: React.FC = () => {
                         modelSrc={planet.modelSrc}
                         position={planet.position}
                         scale={planet.scale}
-                        // orbitRadius={planet.orbitRadius}
-                        // orbitSpeed={planet.orbitSpeed}
                         selfRotationSpeed={planet.selfRotationSpeed}
                         onClick={() => handlePlanetClick(index)} // 행성 클릭 이벤트 추가
                     />

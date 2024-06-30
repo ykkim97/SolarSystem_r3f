@@ -25,7 +25,7 @@ const PlanetModal: React.FC<ModalProps> = ({ planet, onClose }) => {
                 {planet?.modelSrc.split('/').slice(-2, -1)[0]}
             </DialogTitle>
             <DialogContent>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 600 }}>
                     <CardMedia
                         component="img"
                         height="140"
@@ -37,16 +37,13 @@ const PlanetModal: React.FC<ModalProps> = ({ planet, onClose }) => {
                             {planet?.modelSrc.split('/').slice(-2, -1)[0]}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Position: {planet?.position.join(', ')}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
                             Scale: {planet?.scale}
                         </Typography>
                     </CardContent>
                 </Card>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose} color="primary">
+                <Button variant='contained' onClick={onClose} color="primary">
                     Close
                 </Button>
             </DialogActions>
