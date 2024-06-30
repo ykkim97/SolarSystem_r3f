@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { useLoader } from '@react-three/fiber';
+import { useFrame, useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Mesh } from 'three';
 
@@ -10,9 +10,9 @@ interface PlanetProps {
     onClick?: () => void; // 클릭 이벤트 핸들러
 }
 
-const Planet: React.FC<PlanetProps> = ({ modelSrc, position, scale, onClick }) => {
+const Planet: React.FC<PlanetProps> = ({ modelSrc, position, scale, selfRotationSpeed, onClick }) => {
     const gltf = useLoader(GLTFLoader, modelSrc);
-    const meshRef = useRef<Mesh>(null);
+    const meshRef = useRef<Mesh>();
 
     useEffect(() => {
         if (gltf.scene) {
@@ -25,6 +25,10 @@ const Planet: React.FC<PlanetProps> = ({ modelSrc, position, scale, onClick }) =
             }
         }
     }, [gltf, position, scale]);
+
+    useFrame(() => {
+        meshRef.current.rotation.z += selfRotationSpeed; // Apply rotation
+    });
 
     return (
         <primitive
