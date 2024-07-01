@@ -42,6 +42,7 @@ const SolarSystem: React.FC = () => {
 
     const [position, setPosition] = useState({ x: 150, y: 50, z: -8})
     const [target, setTarget] = useState({x: 0, y: 0, z: 0})
+    const [isLoading, setIsLoading] = useState(true);
 
     const toggleAudio = () => {
         if (audioRef.current) {
@@ -155,15 +156,17 @@ const SolarSystem: React.FC = () => {
                 camera={{ position: [200, 150, 540], fov: 55, }}
                 shadows
                 onCreated={({ camera, scene }) => {
-                    scene.background = new THREE.Color(0x000000); // 배경을 검정색으로 설정
-                    // cameraRef.current = camera; // 카메라 참조 설정
+                    scene.background = new THREE.Color(0x000000); // background color 
                     camera.position.set(200, 150, 540); // 초기 카메라 위치 설정
                 }}
             >
                 <ambientLight intensity={0.5} />
                 <spotLight position={[0, 150, 100]} angle={0.3} penumbra={1} castShadow />
                 
-                <CameraControls position={position} target={target}/>
+                {!isLoading && (
+                    <CameraControls position={position} target={target} />
+                )}
+                
                 <Stars radius={200} depth={60} count={2000} factor={7} saturation={0} fade speed={0.5}/>
                 
                 <Suspense fallback={<LoadingText />}>
@@ -175,6 +178,7 @@ const SolarSystem: React.FC = () => {
                             scale={planet.scale}
                             selfRotationSpeed={planet.selfRotationSpeed}
                             onClick={() => handlePlanetClick(index)} // 행성 클릭 이벤트 추가
+                            onLoad={() => setIsLoading(false)}
                         />
                     ))}
                 </Suspense>

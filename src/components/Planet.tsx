@@ -9,9 +9,10 @@ interface PlanetProps {
     scale: number;
     selfRotationSpeed: number;
     onClick?: () => void; // 클릭 이벤트 핸들러
+    onLoad?: () => void; // Load function
 }
 
-const Planet: React.FC<PlanetProps> = ({ modelSrc, position, scale, selfRotationSpeed, onClick }) => {
+const Planet: React.FC<PlanetProps> = ({ modelSrc, position, scale, selfRotationSpeed, onClick, onLoad }) => {
     const gltf = useLoader(GLTFLoader, modelSrc);
     const meshRef = useRef<Mesh | null>(null);
 
@@ -24,6 +25,9 @@ const Planet: React.FC<PlanetProps> = ({ modelSrc, position, scale, selfRotation
             if (meshRef.current) {
                 meshRef.current = mesh;
             }
+        }
+        if (onLoad) {
+            onLoad(); // 로딩 완료 시 onLoad 호출
         }
     }, [gltf, position, scale]);
 
