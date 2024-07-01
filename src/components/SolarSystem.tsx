@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Stars } from '@react-three/drei';
-import { gsap } from 'gsap';
+import { Canvas } from '@react-three/fiber';
+import { Stars } from '@react-three/drei';
 import * as THREE from 'three';
 import Planet from './Planet';
 import PlanetModal from './PlanetModal';
@@ -20,10 +19,6 @@ type PlanetType = {
 }
 
 const SolarSystem: React.FC = () => {
-    const cameraRef = useRef<THREE.PerspectiveCamera>(null);
-    const cameraModelRef = useRef<THREE.Object3D>(null);
-    const currentSection = useRef(0);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPlanet, setSelectedPlanet] = useState<null | PlanetType>(null);
 
@@ -60,7 +55,7 @@ const SolarSystem: React.FC = () => {
 
     const handlePlanetClick = (index: number) => {
         setSelectedPlanet(planetsData[index]);
-        
+
         // Modal 열고 싶을때
         // setIsModalOpen(true);
 

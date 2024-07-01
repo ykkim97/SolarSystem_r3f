@@ -1,11 +1,9 @@
 // Sidebar.js
-import React from 'react';
 import { Drawer, List, ListItem, ListItemText } from '@mui/material';
 import { styled } from '@mui/system';
-
-type SideBarProps = {
-    items : string[];
-    onMenuItemClick : (index: number) => void;
+interface SideBarProps {
+    items: string[];
+    onMenuItemClick: (index: number) => void;
 }
 
 const Sidebar = ({ items, onMenuItemClick } : SideBarProps) => {

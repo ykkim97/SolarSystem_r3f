@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { OrbitControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import gsap from 'gsap';
-import * as THREE from 'three';
 
 interface CameraControlsProps {
     position: { x: number, y: number, z: number };
