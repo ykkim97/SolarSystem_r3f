@@ -5,48 +5,48 @@ import gsap from 'gsap';
 import * as THREE from 'three';
 
 interface CameraControlsProps {
-  position: { x: number, y: number, z: number };
-  target: { x: number, y: number, z: number };
+    position: { x: number, y: number, z: number };
+    target: { x: number, y: number, z: number };
 }
 
 const CameraControls: React.FC<CameraControlsProps> = ({ position, target }) => {
-  const { camera } = useThree();
-  const ref = useRef<any>(null);
+    const { camera } = useThree();
+    const ref = useRef<any>(null);
 
-  const cameraAnimate = () => {
-    if (ref.current) {
-      gsap.timeline().to(
-        camera.position, 
-        {
-          duration: 2,
-          repeat: 0,
-          x: position.x,
-          y: position.y,
-          z: position.z,
-          ease: "power3.inOut",
-      });
+    const cameraAnimate = () => {
+        if (ref.current) {
+            gsap.timeline().to(
+                camera.position, 
+                {
+                    duration: 3,
+                    repeat: 0,
+                    x: position.x,
+                    y: position.y,
+                    z: position.z,
+                    ease: "power3.inOut",
+            });
 
-      gsap.timeline().to(
-        ref.current.target,
-        {
-          duration: 2,
-          repeat: 0,
-          x: target.x,
-          y: target.y,
-          z: target.z,
-          ease: "power3.inOut",
+            gsap.timeline().to(
+                ref.current.target,
+                {
+                    duration: 3,
+                    repeat: 0,
+                    x: target.x,
+                    y: target.y,
+                    z: target.z,
+                    ease: "power3.inOut",
+                }
+            );
         }
-      );
-    }
-  };
+    };
 
-  useEffect(() => {
-    cameraAnimate();
-  }, [target, position]);
+    useEffect(() => {
+        cameraAnimate();
+    }, [target, position]);
 
-  return (
-    <OrbitControls ref={ref} />
-  );
+    return (
+        <OrbitControls ref={ref} />
+    );
 };
 
 export default CameraControls;

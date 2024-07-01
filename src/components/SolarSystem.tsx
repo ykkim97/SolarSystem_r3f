@@ -11,39 +11,27 @@ import Button from '@mui/material/Button';
 import Sidebar from './SideBar';
 import CameraControls from './CameraControls';
 
+type PlanetType = {
+    image: string;
+    modelSrc: string;
+    position: [number, number, number];
+    selfRotationSpeed: number;
+    scale: number;
+}
+
 const SolarSystem: React.FC = () => {
     const cameraRef = useRef<THREE.PerspectiveCamera>(null);
     const cameraModelRef = useRef<THREE.Object3D>(null);
     const currentSection = useRef(0);
-    
-    const [cameraPosition, setCameraPosition] = useState({ x: 100, y: 10, z: 240 });
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedPlanet, setSelectedPlanet] = useState(null);
+    const [selectedPlanet, setSelectedPlanet] = useState<null | PlanetType>(null);
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(true);
 
-    const [position, setPosition] = useState({ x: 25, y: 4, z: -8})
+    const [position, setPosition] = useState({ x: 150, y: 50, z: -8})
     const [target, setTarget] = useState({x: 0, y: 0, z: 0})
-
-    const handleOnclick = () => {
-        setPosition({x: 30, y: -20, z: 0})
-        setTarget({x: 3, y: 2, z: 0 })
-    }
-
-    const handleScroll = () => {
-        const newSection = Math.round(window.scrollY / window.innerHeight);
-        if (newSection !== currentSection.current && cameraRef.current) {
-            gsap.to(cameraRef.current.position, {
-                duration: 1,
-                x: planetsData[newSection].position[0],
-                z: planetsData[newSection].position[2] + 5,
-                y: planetsData[newSection].position[1] + 5,
-            });
-            currentSection.current = newSection;
-        }
-    };
 
     const toggleAudio = () => {
         if (audioRef.current) {
@@ -72,7 +60,8 @@ const SolarSystem: React.FC = () => {
 
     const handlePlanetClick = (index: number) => {
         setSelectedPlanet(planetsData[index]);
-        setIsModalOpen(true);
+        // Modal 열고 싶을때
+        // setIsModalOpen(true);
 
         const planetPosition = planetsData[index].position;
 
@@ -113,7 +102,7 @@ const SolarSystem: React.FC = () => {
         }
 
         setPosition({
-            x: planetPosition[0] + xOffset,  // or any desired offset
+            x: planetPosition[0] + xOffset, 
             y: planetPosition[1] + yOffset,
             z: planetPosition[2] + 10,
         });
@@ -125,25 +114,7 @@ const SolarSystem: React.FC = () => {
     };
 
     const handleMenuItemClick = (index: number) => {
-        if (cameraRef.current) {
-            const planetPosition = new THREE.Vector3(...planetsData[index].position);
-            gsap.to(cameraRef.current.position, {
-                duration: 1.5,
-                x: planetPosition.x + 180, 
-                y: planetPosition.y + 100, // 상하
-                z: planetPosition.z + 50,
-                onUpdate: () => {
-                    if (cameraRef.current) {
-                        cameraRef.current.lookAt(planetPosition);
-                        setCameraPosition({
-                            x: cameraRef.current.position.x,
-                            y: cameraRef.current.position.y,
-                            z: cameraRef.current.position.z,
-                        });
-                    }
-                }
-            });
-        }
+        handlePlanetClick(index - 1);
     };
 
     return (
@@ -173,15 +144,16 @@ const SolarSystem: React.FC = () => {
                 shadows
                 onCreated={({ camera, gl, scene }) => {
                     scene.background = new THREE.Color(0x000000); // 배경을 검정색으로 설정
-                    cameraRef.current = camera; // 카메라 참조 설정
+                    // cameraRef.current = camera; // 카메라 참조 설정
                     camera.position.set(200, 150, 540); // 초기 카메라 위치 설정
                 }}
             >
                 <ambientLight intensity={0.5} />
                 <spotLight position={[0, 150, 100]} angle={0.3} penumbra={1} castShadow />
-                {/* <OrbitControls /> */}
+                
                 <CameraControls position={position} target={target}/>
                 <Stars radius={200} depth={60} count={2000} factor={7} saturation={0} fade speed={0.5}/>
+
                 {planetsData.map((planet, index) => (
                     <Planet
                         key={index}
