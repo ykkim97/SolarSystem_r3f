@@ -4,7 +4,7 @@
 
 ### 개발인원 : 1인 개발
 
-### 배포페이지 : https://master--gotothesolar.netlify.app
+### 배포페이지 : https://gotothesolar.netlify.app/
 
 ### 개발 목적
 평소에 과학 유튜브영상을 많이 보는데 우주관련 영상을 많이 시청합니다.
