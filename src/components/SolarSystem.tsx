@@ -138,7 +138,7 @@ const SolarSystem: React.FC = () => {
                 style={{ width: '100%', height: '100vh' }}
                 camera={{ position: [200, 150, 540], fov: 55, }}
                 shadows
-                onCreated={({ camera, gl, scene }) => {
+                onCreated={({ camera, scene }) => {
                     scene.background = new THREE.Color(0x000000); // 배경을 검정색으로 설정
                     // cameraRef.current = camera; // 카메라 참조 설정
                     camera.position.set(200, 150, 540); // 초기 카메라 위치 설정
