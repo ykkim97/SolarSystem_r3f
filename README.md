@@ -18,13 +18,16 @@
 
 1. 우주공간 그리기
 <br>
+
 ![image](https://github.com/ykkim97/tourKorea-search/assets/17917009/9fa855d7-ea89-4567-aada-8cc18f185f31)
 
  - 검은 배경에 랜덤하게 Stars 컴포넌트를 배치하여 우주공간에 있는 별을 구현하였습니다.
 
 2. 행성 모델 배치
 <br> 
+
 ![image](https://github.com/ykkim97/tourKorea-search/assets/17917009/e0783648-aef7-4617-8641-c4cc25864ec6)
+
  - 일정한 간격을 두고 행성 모델을 로드하였습니다.
 
 3. 카메라 배치 및 시점변경 기능
