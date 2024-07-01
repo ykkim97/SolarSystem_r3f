@@ -40,7 +40,8 @@ const SolarSystem: React.FC = () => {
     }
 
     useEffect(() => {
-        const audio = new Audio('public/sound/superspacy-atmosphere.mp3');
+        const soundUrl = `${import.meta.env.VITE_PUBLIC_URL}sound/superspacy-atmosphere.mp3`
+        const audio = new Audio(soundUrl);
         audio.loop = true;
         audio.play();
         audioRef.current = audio;
