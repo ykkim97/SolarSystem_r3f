@@ -5,14 +5,15 @@ import { Mesh } from 'three';
 
 interface PlanetProps {
     modelSrc: string;
-    position: number[];
+    position: [number,number,number];
     scale: number;
+    selfRotationSpeed: number;
     onClick?: () => void; // 클릭 이벤트 핸들러
 }
 
 const Planet: React.FC<PlanetProps> = ({ modelSrc, position, scale, selfRotationSpeed, onClick }) => {
     const gltf = useLoader(GLTFLoader, modelSrc);
-    const meshRef = useRef<Mesh>();
+    const meshRef = useRef<Mesh | null>(null);
 
     useEffect(() => {
         if (gltf.scene) {
@@ -27,14 +28,17 @@ const Planet: React.FC<PlanetProps> = ({ modelSrc, position, scale, selfRotation
     }, [gltf, position, scale]);
 
     useFrame(() => {
-        meshRef.current.rotation.z += selfRotationSpeed; // Apply rotation
+        if (meshRef.current) {
+            // 자전 적용
+            meshRef.current.rotation.z += selfRotationSpeed;
+        }
     });
 
     return (
         <primitive
             ref={meshRef}
             object={gltf.scene}
-            onClick={onClick} // 클릭 이벤트 설정
+            onClick={onClick}
         />
     );
 };

@@ -60,6 +60,7 @@ const SolarSystem: React.FC = () => {
 
     const handlePlanetClick = (index: number) => {
         setSelectedPlanet(planetsData[index]);
+        
         // Modal 열고 싶을때
         // setIsModalOpen(true);
 
