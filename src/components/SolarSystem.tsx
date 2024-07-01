@@ -1,14 +1,15 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, Suspense, lazy } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Stars } from '@react-three/drei';
+import { Stars, Text } from '@react-three/drei';
 import * as THREE from 'three';
-import Planet from './Planet';
 import PlanetModal from './PlanetModal';
 import '../App.css';
 import { planetsData } from '../data/planetsData';
 import Button from '@mui/material/Button';
 import Sidebar from './SideBar';
 import CameraControls from './CameraControls';
+
+const Planet = lazy(() => import('./Planet'));
 
 type PlanetType = {
     image: string;
@@ -17,6 +18,20 @@ type PlanetType = {
     selfRotationSpeed: number;
     scale: number;
 }
+
+// 로딩 메시지를 3D 텍스트로 표시하는 컴포넌트
+const LoadingText = () => {
+    return (
+        <>
+            <Text position={[0, 10, 0]} fontSize={20} color='white'>
+                데이터를 불러오고 있습니다.
+            </Text>
+            <Text position={[0, -10, 0]} fontSize={20} color='white'>
+                조금만 기다려주세요.⏳
+            </Text>
+        </>
+    );
+};
 
 const SolarSystem: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -150,17 +165,19 @@ const SolarSystem: React.FC = () => {
                 
                 <CameraControls position={position} target={target}/>
                 <Stars radius={200} depth={60} count={2000} factor={7} saturation={0} fade speed={0.5}/>
-
-                {planetsData.map((planet, index) => (
-                    <Planet
-                        key={index}
-                        modelSrc={planet.modelSrc}
-                        position={planet.position}
-                        scale={planet.scale}
-                        selfRotationSpeed={planet.selfRotationSpeed}
-                        onClick={() => handlePlanetClick(index)} // 행성 클릭 이벤트 추가
-                    />
-                ))}
+                
+                <Suspense fallback={<LoadingText />}>
+                    {planetsData.map((planet, index) => (
+                        <Planet
+                            key={index}
+                            modelSrc={planet.modelSrc}
+                            position={planet.position}
+                            scale={planet.scale}
+                            selfRotationSpeed={planet.selfRotationSpeed}
+                            onClick={() => handlePlanetClick(index)} // 행성 클릭 이벤트 추가
+                        />
+                    ))}
+                </Suspense>
             </Canvas>
 
             {isModalOpen && selectedPlanet && (
