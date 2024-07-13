@@ -2,8 +2,10 @@ type PlanetDataType = {
     image: string;
     modelSrc: string;
     position: [number, number, number];
-    selfRotationSpeed: number,
-    scale: number
+    selfRotationSpeed: number;
+    scale: number;
+    name: string;
+    nameOffset: number;
 }[];
 
 export const planetsData: PlanetDataType = [
@@ -13,7 +15,9 @@ export const planetsData: PlanetDataType = [
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/Sun/Sun.gltf`, 
         position: [-5, 2, 50], 
         selfRotationSpeed: 0, 
-        scale: 30.9 
+        scale: 30.9,
+        name: '태양',
+        nameOffset: 50,
     },
     // Mercury
     { 
@@ -21,7 +25,9 @@ export const planetsData: PlanetDataType = [
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/Mercury/Mercury.gltf`, 
         position: [3, 2, 30], 
         selfRotationSpeed: 0.0002, 
-        scale: 0.005 
+        scale: 0.005,
+        name: '수성',
+        nameOffset: 10,
     },
     // Venus
     { 
@@ -29,7 +35,9 @@ export const planetsData: PlanetDataType = [
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/Venus/Venus.gltf`, 
         position: [4, 2, 10], 
         selfRotationSpeed: 0.0002, 
-        scale: 0.01 
+        scale: 0.01,
+        name: '금성', 
+        nameOffset: 10,
     },
     // Earth
     { 
@@ -37,7 +45,9 @@ export const planetsData: PlanetDataType = [
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/Earth/Earth.gltf`, 
         position: [1, 2, -15], 
         selfRotationSpeed: 0.0002, 
-        scale: 0.015 
+        scale: 0.015,
+        name: '지구', 
+        nameOffset: 10,
     },
     // Moon
     { 
@@ -45,7 +55,9 @@ export const planetsData: PlanetDataType = [
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/Moon/Moon.gltf`, 
         position: [10, 2, -22], 
         selfRotationSpeed: 0.0002, 
-        scale: 0.006 
+        scale: 0.006,
+        name: '달', 
+        nameOffset: 10,
     },
     // Mars
     { 
@@ -53,7 +65,9 @@ export const planetsData: PlanetDataType = [
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/mars/Mars.gltf`, 
         position: [3, 2, -45], 
         selfRotationSpeed: 0.0002, 
-        scale: 0.009 
+        scale: 0.009,
+        name: '화성', 
+        nameOffset: 10,
     },
     // Jupiter
     { 
@@ -61,7 +75,9 @@ export const planetsData: PlanetDataType = [
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/Jupiter/Jupiter.gltf`, 
         position: [-7, 2, -110], 
         selfRotationSpeed: 0.0002, 
-        scale: 0.15 
+        scale: 0.15,
+        name: '목성',
+        nameOffset: 20,
     },
     // Saturn
     { 
@@ -69,7 +85,9 @@ export const planetsData: PlanetDataType = [
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/Saturn/saturn1.gltf`, 
         position: [-10, 2, -215], 
         selfRotationSpeed: 0.0002, 
-        scale: 0.12 
+        scale: 0.12,
+        name: '토성', 
+        nameOffset: 20,
     },
     // Uranus
     { 
@@ -77,7 +95,9 @@ export const planetsData: PlanetDataType = [
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/Uranos/Uranus.gltf`, 
         position: [5, 2, -306], 
         selfRotationSpeed: 0.0002, 
-        scale: 0.09 
+        scale: 0.09,
+        name: '천왕성', 
+        nameOffset: 19,
     },
     // Neptune
     { 
@@ -85,7 +105,9 @@ export const planetsData: PlanetDataType = [
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/Neptune/Neptune.gltf`, 
         position: [8, 2, -387], 
         selfRotationSpeed: 0.0002, 
-        scale: 0.08 
+        scale: 0.08,
+        name: '해왕성', 
+        nameOffset: 15,
     },
     // Pluto
     { 
@@ -93,6 +115,8 @@ export const planetsData: PlanetDataType = [
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/Pluto/Pluto.gltf`, 
         position: [3, 2, -720], 
         selfRotationSpeed: 0.0002, 
-        scale: 0.004 
+        scale: 0.004,
+        name: '명왕성', 
+        nameOffset: 10,
     },
 ];

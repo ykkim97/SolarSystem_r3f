@@ -17,6 +17,8 @@ type PlanetType = {
     position: [number, number, number];
     selfRotationSpeed: number;
     scale: number;
+    name:string;
+    nameOffset: number;
 }
 
 // 로딩 메시지를 3D 텍스트로 표시하는 컴포넌트
@@ -171,15 +173,27 @@ const SolarSystem: React.FC = () => {
                 
                 <Suspense fallback={<LoadingText />}>
                     {planetsData.map((planet, index) => (
-                        <Planet
-                            key={index}
-                            modelSrc={planet.modelSrc}
-                            position={planet.position}
-                            scale={planet.scale}
-                            selfRotationSpeed={planet.selfRotationSpeed}
-                            onClick={() => handlePlanetClick(index)} // 행성 클릭 이벤트 추가
-                            onLoad={() => setIsLoading(false)}
-                        />
+                        <React.Fragment key={index}>
+                            <Planet
+                                key={index}
+                                modelSrc={planet.modelSrc}
+                                position={planet.position}
+                                scale={planet.scale}
+                                selfRotationSpeed={planet.selfRotationSpeed}
+                                onClick={() => handlePlanetClick(index)} // 행성 클릭 이벤트 추가
+                                onLoad={() => setIsLoading(false)}
+                            />
+                            <Text
+                                position={[planet.position[0], planet.position[1] + planet.nameOffset, planet.position[2]]}
+                                fontSize={5}
+                                rotation={[0, Math.PI / 2, 0]}
+                                color='white'
+                                anchorX="center"
+                                anchorY="middle"
+                            >
+                                {planet.name}
+                            </Text>
+                        </React.Fragment>
                     ))}
                 </Suspense>
             </Canvas>
