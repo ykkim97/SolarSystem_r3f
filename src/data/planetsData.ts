@@ -6,6 +6,7 @@ type PlanetDataType = {
     scale: number;
     name: string;
     nameOffset: number;
+    orbitSpeed: number;
 }[];
 
 export const planetsData: PlanetDataType = [
@@ -13,11 +14,12 @@ export const planetsData: PlanetDataType = [
     { 
         image : `${import.meta.env.VITE_PUBLIC_URL}planetImages/sun.jpg`, 
         modelSrc: `${import.meta.env.VITE_PUBLIC_URL}models/Sun/Sun.gltf`, 
-        position: [-5, 2, 50], 
+        position: [-5, 2, 100], 
         selfRotationSpeed: 0, 
-        scale: 30.9,
+        scale: 2.9,
         name: '태양',
-        nameOffset: 50,
+        nameOffset: 40,
+        orbitSpeed: 0,
     },
     // Mercury
     { 
@@ -27,7 +29,8 @@ export const planetsData: PlanetDataType = [
         selfRotationSpeed: 0.0002, 
         scale: 0.005,
         name: '수성',
-        nameOffset: 10,
+        nameOffset: 5,
+        orbitSpeed: 0.01,
     },
     // Venus
     { 
@@ -38,6 +41,7 @@ export const planetsData: PlanetDataType = [
         scale: 0.01,
         name: '금성', 
         nameOffset: 10,
+        orbitSpeed: 0.008,
     },
     // Earth
     { 
@@ -48,6 +52,7 @@ export const planetsData: PlanetDataType = [
         scale: 0.015,
         name: '지구', 
         nameOffset: 10,
+        orbitSpeed: 0.008,
     },
     // Moon
     { 
@@ -58,6 +63,7 @@ export const planetsData: PlanetDataType = [
         scale: 0.006,
         name: '달', 
         nameOffset: 10,
+        orbitSpeed: 0.008,
     },
     // Mars
     { 
@@ -68,6 +74,7 @@ export const planetsData: PlanetDataType = [
         scale: 0.009,
         name: '화성', 
         nameOffset: 10,
+        orbitSpeed: 0.008,
     },
     // Jupiter
     { 
@@ -78,6 +85,7 @@ export const planetsData: PlanetDataType = [
         scale: 0.15,
         name: '목성',
         nameOffset: 20,
+        orbitSpeed: 0.008,
     },
     // Saturn
     { 
@@ -88,6 +96,7 @@ export const planetsData: PlanetDataType = [
         scale: 0.12,
         name: '토성', 
         nameOffset: 20,
+        orbitSpeed: 0.008,
     },
     // Uranus
     { 
@@ -98,6 +107,7 @@ export const planetsData: PlanetDataType = [
         scale: 0.09,
         name: '천왕성', 
         nameOffset: 19,
+        orbitSpeed: 0.008,
     },
     // Neptune
     { 
@@ -108,6 +118,7 @@ export const planetsData: PlanetDataType = [
         scale: 0.08,
         name: '해왕성', 
         nameOffset: 15,
+        orbitSpeed: 0.008,
     },
     // Pluto
     { 
@@ -118,5 +129,6 @@ export const planetsData: PlanetDataType = [
         scale: 0.004,
         name: '명왕성', 
         nameOffset: 10,
+        orbitSpeed: 0.008,
     },
 ];

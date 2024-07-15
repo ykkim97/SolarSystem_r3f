@@ -8,6 +8,7 @@ import { planetsData } from '../data/planetsData';
 import Button from '@mui/material/Button';
 import Sidebar from './SideBar';
 import CameraControls from './CameraControls';
+import OrbitingPlanet from './PlanetGroup';
 
 const Planet = lazy(() => import('./Planet'));
 
@@ -19,6 +20,8 @@ type PlanetType = {
     scale: number;
     name:string;
     nameOffset: number;
+    orbitSpeed: number;
+    index?: number;
 }
 
 // 로딩 메시지를 3D 텍스트로 표시하는 컴포넌트
