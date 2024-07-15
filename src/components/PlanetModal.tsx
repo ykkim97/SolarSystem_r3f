@@ -28,16 +28,13 @@ const PlanetModal: React.FC<ModalProps> = ({ planet, onClose }) => {
                 <Card sx={{ maxWidth: 600 }}>
                     <CardMedia
                         component="img"
-                        height="140"
+                        height="auto"
                         image={planet?.image || "/static/images/cards/contemplative-reptile.jpg"}
                         alt={planet?.modelSrc.split('/').slice(-2, -1)[0]}
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {planet?.modelSrc.split('/').slice(-2, -1)[0]}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Scale: {planet?.scale}
+                        <Typography variant="body2" color="black">
+                            {planet?.description}
                         </Typography>
                     </CardContent>
                 </Card>

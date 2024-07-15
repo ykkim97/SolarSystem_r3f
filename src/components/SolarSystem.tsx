@@ -8,7 +8,6 @@ import { planetsData } from '../data/planetsData';
 import Button from '@mui/material/Button';
 import Sidebar from './SideBar';
 import CameraControls from './CameraControls';
-import OrbitingPlanet from './PlanetGroup';
 
 const Planet = lazy(() => import('./Planet'));
 
@@ -74,6 +73,11 @@ const SolarSystem: React.FC = () => {
             }
         };
     }, []);
+
+    const handlePlanetText = (index: number) => {
+        setSelectedPlanet(planetsData[index]);
+        setIsModalOpen(true);
+    }
 
     const handlePlanetClick = (index: number) => {
         setSelectedPlanet(planetsData[index]);
@@ -193,6 +197,7 @@ const SolarSystem: React.FC = () => {
                                 color='white'
                                 anchorX="center"
                                 anchorY="middle"
+                                onClick={() => handlePlanetText(index)}
                             >
                                 {planet.name}
                             </Text>
